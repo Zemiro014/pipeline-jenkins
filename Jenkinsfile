@@ -2,9 +2,11 @@ pipeline {
     agent any
     stages {
         stage ('Build Backend') {
-            dir('backend') {
-                git credentialsId: 'GitHubId', url: 'https://github.com/Zemiro014/tasks-backend'
-                sh 'mvn clean package -DskipTests=true'
+            steps {
+                dir('backend') {
+                    git credentialsId: 'GitHubId', url: 'https://github.com/Zemiro014/tasks-backend'
+                    sh 'mvn clean package -DskipTests=true'
+                }
             }
         }
         stage ('Unit Test') {
