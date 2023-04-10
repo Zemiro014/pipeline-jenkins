@@ -10,8 +10,10 @@ pipeline {
             }
         }
         stage ('Unit Test') {
-             dir('backend') {
-                sh 'mvn test'
+            steps {
+                dir('backend') {
+                    sh 'mvn test'
+                }
             }
         }
         stage ('Static analysis with sonar') {
@@ -44,9 +46,9 @@ pipeline {
         // }
 
         stage ('Deploy Backend') {
-            dir('backend') {
-                steps {
-                    deploy adapters: [tomcat8(credentialsId: 'TomCatId', path: '', url: 'http://localhost:8001/')], contextPath: 'tasks-backend', war: 'target/tasks-backend.war'
+            steps {
+                dir('backend') {                
+                        deploy adapters: [tomcat8(credentialsId: 'TomCatId', path: '', url: 'http://localhost:8001/')], contextPath: 'tasks-backend', war: 'target/tasks-backend.war'
                 }
             }
         }
